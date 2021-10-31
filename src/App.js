@@ -1,11 +1,11 @@
 import React from "react";
-import Header from "./components/ui/Header";
+import Navbar from "./components/layout/Navbar";
 import "./App.css";
 
 const App = () => {
   return (
     <div className='container'>
-      <Header />
+      <Navbar />
     </div>
   );
 };
