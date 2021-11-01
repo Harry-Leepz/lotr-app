@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { getAllPokemon } from "./components/data/Pokemon";
+import { getAllPokemon, getPokemon } from "./components/data/Pokemon";
 import Navbar from "./components/layout/Navbar";
 import "./App.css";
 
@@ -14,10 +14,8 @@ const App = () => {
   useEffect(() => {
     async function fetchData() {
       let response = await getAllPokemon(initialUrl);
-      console.log(response);
       setNextUrl(response.next); // data from fetch request
       setprevUrl(response.previous); // data from fetch request
-
       await loadingPokemon(response.results);
       setLoading(false);
     }
@@ -26,13 +24,17 @@ const App = () => {
 
   // Get individual pokemon records from an array off the API
   const loadingPokemon = async (data) => {
-    let _pokemon = await Promise.all(
+    let _pokemonData = await Promise.all(
       data.map(async (pokemon) => {
-        let pokemonRecord = await getPokemon(pokemon);
+        let pokemonRecord = await getPokemon(pokemon.url);
+        return pokemonRecord;
       })
     );
+
+    setPokemonData(_pokemonData);
   };
 
+  console.log(pokemonData);
   return (
     <div className='container'>
       <Navbar />
