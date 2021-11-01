@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { getAllPokemon, getPokemon } from "./components/data/Pokemon";
 import Navbar from "./components/layout/Navbar";
+import Card from "./components/layout/Card";
 import "./App.css";
 
 const App = () => {
@@ -34,11 +35,20 @@ const App = () => {
     setPokemonData(_pokemonData);
   };
 
-  console.log(pokemonData);
   return (
     <div className='container'>
       <Navbar />
-      {loading ? <h1>Loading...</h1> : <h1> Data is here </h1>}
+      {loading ? (
+        <h1>Loading...</h1> // if loading is True else False
+      ) : (
+        <>
+          <div className='grid-container'>
+            {pokemonData.map((pokemon, i) => {
+              return <Card key={i} pokemon={pokemon} />;
+            })}
+          </div>
+        </>
+      )}
     </div>
   );
 };
