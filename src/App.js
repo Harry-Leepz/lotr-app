@@ -17,10 +17,21 @@ const App = () => {
       console.log(response);
       setNextUrl(response.next); // data from fetch request
       setprevUrl(response.previous); // data from fetch request
+
+      await loadingPokemon(response.results);
       setLoading(false);
     }
     fetchData();
   }, []); //  empty array means loading will only happen once
+
+  // Get individual pokemon records from an array off the API
+  const loadingPokemon = async (data) => {
+    let _pokemon = await Promise.all(
+      data.map(async (pokemon) => {
+        let pokemonRecord = await getPokemon(pokemon);
+      })
+    );
+  };
 
   return (
     <div className='container'>
