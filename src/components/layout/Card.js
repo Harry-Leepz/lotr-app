@@ -2,18 +2,18 @@ import React from "react";
 
 const Card = ({ pokemon }) => {
   return (
-    <div className='Card'>
-      <div className='Card__img'>
+    <div className='card'>
+      <div className='card-img'>
         <img src={pokemon.sprites.front_default} />
       </div>
-      <div className='Card__Name'>{pokemon.name}</div>
-      <div className='Card__types'>
+      <div className='card-name'>{pokemon.name}</div>
+      <div className='card-types'>
         {pokemon.types.map((type) => {
-          return <div className='Card__type'>{type.type.name}</div>;
+          return <div className='card-type'>{type.type.name}</div>;
         })}
       </div>
-      <div className='Card_info'>
-        <div className='Card__data'>
+      <div className='card-info'>
+        <div className='card-data'>
           <p>
             <strong>Weight: </strong>
             {pokemon.weight}
