@@ -10,7 +10,7 @@ const App = () => {
   const [prevUrl, setprevUrl] = useState("");
   const [loading, setLoading] = useState(true); // Loading will be set to false when data is loaded
 
-  const initialUrl = "https://pokeapi.co/api/v2/pokemon";
+  const initialUrl = "https://pokeapi.co/api/v2/pokemon?limit=100";
 
   useEffect(() => {
     async function fetchData() {
@@ -22,6 +22,26 @@ const App = () => {
     }
     fetchData();
   }, []); //  empty array means loading will only happen once
+
+  const nextPage = async () => {
+    if (!nextUrl) return;
+    setLoading(true);
+    let data = await getAllPokemon(nextUrl);
+    await loadingPokemon(data.results);
+    setNextUrl(data.next);
+    setprevUrl(data.previous);
+    setLoading(false);
+  };
+
+  const prevPage = async () => {
+    if (!prevUrl) return;
+    setLoading(true);
+    let data = await getAllPokemon(prevUrl);
+    await loadingPokemon(data.results);
+    setNextUrl(data.next);
+    setprevUrl(data.previous);
+    setLoading(false);
+  };
 
   // Get individual pokemon records from an array off the API
   const loadingPokemon = async (data) => {
@@ -38,6 +58,10 @@ const App = () => {
   return (
     <div className='container'>
       <Navbar />
+      <div className='btn'>
+        <button onClick={prevPage}>Prev</button>
+        <button onClick={nextPage}>Next</button>
+      </div>
       {loading ? (
         <h1>Loading...</h1> // if loading is True else False
       ) : (
